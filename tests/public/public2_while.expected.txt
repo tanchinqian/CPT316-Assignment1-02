@@ -1,0 +1,144 @@
+== TOKEN STREAM ==
+LINE  COL  TYPE        LEXEME
+   3    1  KEYWORD     let
+   3    5  IDENTIFIER  n
+   3    7  ASSIGN      =
+   3    9  INTEGER     5
+   3   10  SEMICOLON   ;
+   4    1  KEYWORD     let
+   4    5  IDENTIFIER  fact
+   4   10  ASSIGN      =
+   4   12  INTEGER     1
+   4   13  SEMICOLON   ;
+   5    1  KEYWORD     while
+   5    7  LPAREN      (
+   5    8  IDENTIFIER  n
+   5   10  REL_OP      >
+   5   12  INTEGER     1
+   5   13  RPAREN      )
+   5   15  LBRACE      {
+   6    5  IDENTIFIER  fact
+   6   10  ASSIGN      =
+   6   12  IDENTIFIER  fact
+   6   17  ARITH_OP    *
+   6   19  IDENTIFIER  n
+   6   20  SEMICOLON   ;
+   7    5  IDENTIFIER  n
+   7    7  ASSIGN      =
+   7    9  IDENTIFIER  n
+   7   11  ARITH_OP    -
+   7   13  INTEGER     1
+   7   14  SEMICOLON   ;
+   8    1  RBRACE      }
+   9    1  KEYWORD     print
+   9    6  LPAREN      (
+   9    7  IDENTIFIER  fact
+   9   11  RPAREN      )
+   9   12  SEMICOLON   ;
+  11    1  KEYWORD     let
+  11    5  IDENTIFIER  i
+  11    7  ASSIGN      =
+  11    9  INTEGER     1
+  11   10  SEMICOLON   ;
+  12    1  KEYWORD     let
+  12    5  IDENTIFIER  count
+  12   11  ASSIGN      =
+  12   13  INTEGER     0
+  12   14  SEMICOLON   ;
+  13    1  KEYWORD     while
+  13    7  LPAREN      (
+  13    8  IDENTIFIER  i
+  13   10  REL_OP      <=
+  13   13  INTEGER     12
+  13   15  RPAREN      )
+  13   17  LBRACE      {
+  14    5  KEYWORD     if
+  14    8  LPAREN      (
+  14    9  IDENTIFIER  i
+  14   11  ARITH_OP    %
+  14   13  INTEGER     3
+  14   15  REL_OP      ==
+  14   18  INTEGER     0
+  14   19  RPAREN      )
+  14   21  LBRACE      {
+  15    9  IDENTIFIER  count
+  15   15  ASSIGN      =
+  15   17  IDENTIFIER  count
+  15   23  ARITH_OP    +
+  15   25  INTEGER     1
+  15   26  SEMICOLON   ;
+  16    5  RBRACE      }
+  17    5  IDENTIFIER  i
+  17    7  ASSIGN      =
+  17    9  IDENTIFIER  i
+  17   11  ARITH_OP    +
+  17   13  INTEGER     1
+  17   14  SEMICOLON   ;
+  18    1  RBRACE      }
+  19    1  KEYWORD     print
+  19    6  LPAREN      (
+  19    7  IDENTIFIER  count
+  19   12  RPAREN      )
+  19   13  SEMICOLON   ;
+
+== TOKEN COUNTS ==
+Total tokens: 80
+  KEYWORD     9
+  IDENTIFIER  18
+  INTEGER     11
+  ARITH_OP    5
+  REL_OP      3
+  ASSIGN      8
+  LPAREN      5
+  RPAREN      5
+  LBRACE      3
+  RBRACE      3
+  SEMICOLON   10
+
+== AST ==
+Program
+  Let n
+    Int 5
+  Let fact
+    Int 1
+  While
+    RelOp >
+      Id n
+      Int 1
+    Body
+      Assign fact
+        BinOp *
+          Id fact
+          Id n
+      Assign n
+        BinOp -
+          Id n
+          Int 1
+  Print
+    Id fact
+  Let i
+    Int 1
+  Let count
+    Int 0
+  While
+    RelOp <=
+      Id i
+      Int 12
+    Body
+      If
+        RelOp ==
+          BinOp %
+            Id i
+            Int 3
+          Int 0
+        Then
+          Assign count
+            BinOp +
+              Id count
+              Int 1
+      Assign i
+        BinOp +
+          Id i
+          Int 1
+  Print
+    Id count

@@ -1,0 +1,4 @@
+# Public test 5: a syntax error (missing closing parenthesis)
+let x = 4;
+let y = (x + 2 * 3;
+print(y);

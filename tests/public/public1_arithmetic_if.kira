@@ -1,0 +1,16 @@
+# Public test 1: arithmetic, precedence and if/else
+let a = 8;
+let b = 3;
+let c = a + b * 2;
+let d = (a + b) * 2;
+let e = a - b - 1;
+let f = a / b + a % b;
+print(c);
+print(d);
+print(e);
+print(f);
+if (c >= d) {
+    print(1);
+} else {
+    print(0);
+}

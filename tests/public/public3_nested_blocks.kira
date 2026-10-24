@@ -1,0 +1,19 @@
+# Public test 3: nested blocks, if without else, and tokens written without spaces
+let limit=20;
+let n = 1;
+let odd = 0;
+let even = 0;
+while (n <= limit) {
+    if (n % 2 != 0) {
+        odd = odd + n;
+    } else {
+        if (n % 4 == 0) {
+            even = even + n * 2;
+        } else {
+            even = even + n;
+        }
+    }
+    if (n > 15) { print(n); }
+    n=n+1;
+}
+print(odd-even);   # no spaces are needed around operators

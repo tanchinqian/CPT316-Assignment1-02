@@ -1,0 +1,6 @@
+# Public test 4: two lexical errors, both must be reported
+let price = 250;
+let rate = 6;
+let tax = price $ rate / 100;
+let 2nd = tax + 1;
+print(tax);

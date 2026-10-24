@@ -1,0 +1,41 @@
+== TOKEN STREAM ==
+LINE  COL  TYPE        LEXEME
+   2    1  KEYWORD     let
+   2    5  IDENTIFIER  count
+   2   11  ASSIGN      =
+   2   13  INTEGER     3
+   2   14  SEMICOLON   ;
+   3    1  KEYWORD     while
+   3    7  LPAREN      (
+   3    8  IDENTIFIER  count
+   3   14  REL_OP      >
+   3   16  INTEGER     0
+   3   17  RPAREN      )
+   3   19  LBRACE      {
+   4    5  KEYWORD     print
+   4   10  LPAREN      (
+   4   11  IDENTIFIER  count
+   4   16  RPAREN      )
+   4   17  SEMICOLON   ;
+   5    5  IDENTIFIER  count
+   5   11  ASSIGN      =
+   5   13  IDENTIFIER  count
+   5   19  ARITH_OP    -
+   5   21  INTEGER     1
+   5   22  SEMICOLON   ;
+
+== TOKEN COUNTS ==
+Total tokens: 23
+  KEYWORD     3
+  IDENTIFIER  5
+  INTEGER     3
+  ARITH_OP    1
+  REL_OP      1
+  ASSIGN      2
+  LPAREN      2
+  RPAREN      2
+  LBRACE      1
+  SEMICOLON   3
+
+== AST ==
+SyntaxError at end of input: expected '}'

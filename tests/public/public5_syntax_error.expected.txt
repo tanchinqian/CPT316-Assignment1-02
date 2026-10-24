@@ -1,0 +1,36 @@
+== TOKEN STREAM ==
+LINE  COL  TYPE        LEXEME
+   2    1  KEYWORD     let
+   2    5  IDENTIFIER  x
+   2    7  ASSIGN      =
+   2    9  INTEGER     4
+   2   10  SEMICOLON   ;
+   3    1  KEYWORD     let
+   3    5  IDENTIFIER  y
+   3    7  ASSIGN      =
+   3    9  LPAREN      (
+   3   10  IDENTIFIER  x
+   3   12  ARITH_OP    +
+   3   14  INTEGER     2
+   3   16  ARITH_OP    *
+   3   18  INTEGER     3
+   3   19  SEMICOLON   ;
+   4    1  KEYWORD     print
+   4    6  LPAREN      (
+   4    7  IDENTIFIER  y
+   4    8  RPAREN      )
+   4    9  SEMICOLON   ;
+
+== TOKEN COUNTS ==
+Total tokens: 20
+  KEYWORD     3
+  IDENTIFIER  4
+  INTEGER     3
+  ARITH_OP    2
+  ASSIGN      2
+  LPAREN      2
+  RPAREN      1
+  SEMICOLON   3
+
+== AST ==
+SyntaxError at line 3, col 19: expected ')' before ';'

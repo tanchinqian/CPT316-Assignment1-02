@@ -1,0 +1,46 @@
+== TOKEN STREAM ==
+LINE  COL  TYPE        LEXEME
+   2    1  KEYWORD     let
+   2    5  IDENTIFIER  price
+   2   11  ASSIGN      =
+   2   13  INTEGER     250
+   2   16  SEMICOLON   ;
+   3    1  KEYWORD     let
+   3    5  IDENTIFIER  rate
+   3   10  ASSIGN      =
+   3   12  INTEGER     6
+   3   13  SEMICOLON   ;
+   4    1  KEYWORD     let
+   4    5  IDENTIFIER  tax
+   4    9  ASSIGN      =
+   4   11  IDENTIFIER  price
+   4   19  IDENTIFIER  rate
+   4   24  ARITH_OP    /
+   4   26  INTEGER     100
+   4   29  SEMICOLON   ;
+   5    1  KEYWORD     let
+   5    9  ASSIGN      =
+   5   11  IDENTIFIER  tax
+   5   15  ARITH_OP    +
+   5   17  INTEGER     1
+   5   18  SEMICOLON   ;
+   6    1  KEYWORD     print
+   6    6  LPAREN      (
+   6    7  IDENTIFIER  tax
+   6   10  RPAREN      )
+   6   11  SEMICOLON   ;
+LexicalError at line 4, col 17: invalid character '$'
+LexicalError at line 5, col 5: malformed token '2nd'
+
+== TOKEN COUNTS ==
+Total tokens: 29
+  KEYWORD     5
+  IDENTIFIER  7
+  INTEGER     4
+  ARITH_OP    2
+  ASSIGN      4
+  LPAREN      1
+  RPAREN      1
+  SEMICOLON   5
+
+2 lexical error(s). Parsing skipped.
