@@ -60,11 +60,3 @@ These checks verify startup and scaffold contracts; they do not validate a
 compiler. After implementation, run each `tests/public/*.kira` input and compare
 token counts, AST structure, and error types/lines with its `.expected.txt` file.
 The official `tests/public/README.txt` explains permitted output differences.
-
-## AI-use record
-
-Codex helped prepare/adapt this starter's file structure, shared data types,
-command-line wiring, interface stubs, documentation, and smoke checks. The lexer,
-parser, and AST display are unimplemented. Keep an accurate record of this help
-and any later use for the report's AI-use declaration. The group should review
-the scaffold and write and understand its own compiler components.
