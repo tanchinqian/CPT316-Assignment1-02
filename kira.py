@@ -8,6 +8,25 @@ from kira_frontend.ast_nodes import format_ast
 from kira_frontend.errors import SyntaxIssue
 from kira_frontend.lexer import Lexer
 from kira_frontend.parser import parse_program
+from kira_frontend.tokens import TokenType
+
+
+def print_table(headers: tuple[str, ...], rows: list[tuple[str, ...]]) -> None:
+    widths = [
+        max([len(header), *(len(row[index]) for row in rows)])
+        for index, header in enumerate(headers)
+    ]
+    border = "+-" + "-+-".join("-" * width for width in widths) + "-+"
+
+    def print_row(values: tuple[str, ...]) -> None:
+        print("| " + " | ".join(value.ljust(width) for value, width in zip(values, widths)) + " |")
+
+    print(border)
+    print_row(headers)
+    print(border)
+    for row in rows:
+        print_row(row)
+    print(border)
 
 
 def main() -> int:
@@ -20,16 +39,26 @@ def main() -> int:
         cli.error(str(error))
 
     tokens, lexical_issues = Lexer().lex(source)
-    print("Token stream")
-    for token in tokens:
-        print(f"{token.type.value} {token.lexeme!r} at line {token.line}, col {token.column}")
-    print("\nToken counts")
+    print("KIRA SOURCE")
+    print(source.rstrip("\r\n"))
+    print()
+    print("TOKEN STREAM")
+    token_rows = [
+        (str(token.line), str(token.column), token.type.value, repr(token.lexeme))
+        for token in tokens
+    ]
+    print_table(("LINE", "COLUMN", "TYPE", "LEXEME"), token_rows)
+
+    print("\nTOKEN COUNTS")
     counts = Counter(token.type.value for token in tokens)
-    print(f"TOTAL: {len(tokens)}")
-    for name, count in sorted(counts.items()):
-        print(f"{name}: {count}")
+    count_rows = [(name, str(counts[name.value])) for name in TokenType]
+    count_rows.insert(0, ("TOTAL", str(len(tokens))))
+    print_table(("TOKEN TYPE", "COUNT"), count_rows)
 
     if lexical_issues:
+        print("\n" + "=" * 24)
+        print("LEXICAL ERRORS")
+        print("=" * 24)
         for issue in lexical_issues:
             print(issue)
         return 1  # Required: do not run the parser after lexical errors.
