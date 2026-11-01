@@ -33,7 +33,8 @@ class Lexer:
         issues: list[LexicalIssue] = []
         index, line, column = 0, 1, 1
         letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        identifier_characters = letters + "0123456789_"
+        digits = "0123456789"
+        identifier_characters = letters + digits + "_"
         single_character_tokens = {
             "+": TokenType.ARITH_OP,
             "-": TokenType.ARITH_OP,
@@ -59,10 +60,10 @@ class Lexer:
                     column += 1
                 continue
 
-            if source[index] in "0123456789":
+            if source[index] in digits:
                 start = index
                 start_line, start_column = line, column
-                while index < len(source) and source[index] in "0123456789":
+                while index < len(source) and source[index] in digits:
                     index += 1
                     column += 1
 

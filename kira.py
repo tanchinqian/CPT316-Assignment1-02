@@ -25,6 +25,8 @@ def print_table(headers: tuple[str, ...], rows: list[tuple[str, ...]]) -> None:
     print_row(headers)
     print(border)
     for row in rows:
+        if row[0] == "INVALID":
+            print(border)
         print_row(row)
     print(border)
 
@@ -52,7 +54,12 @@ def main() -> int:
     print("\nTOKEN COUNTS")
     counts = Counter(token.type.value for token in tokens)
     count_rows = [(name, str(counts[name.value])) for name in TokenType]
-    count_rows.insert(0, ("TOTAL", str(len(tokens))))
+    count_rows.extend(
+        [   
+            ("INVALID", str(len(lexical_issues))),
+            ("TOTAL", str(len(tokens))),
+        ]
+    )
     print_table(("TOKEN TYPE", "COUNT"), count_rows)
 
     if lexical_issues:
