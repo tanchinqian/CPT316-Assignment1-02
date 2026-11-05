@@ -37,10 +37,11 @@ class StarterTests(unittest.TestCase):
         self.assertIn("error:", result.stderr)
         self.assertNotIn("Traceback", result.stderr)
 
-    def test_pending_member3_work_is_reported_honestly(self):
+    def test_valid_program_prints_ast(self):
         result = self.run_cli(ROOT / "tests/public/public1_arithmetic_if.kira")
-        self.assertEqual(result.returncode, 2)
-        self.assertIn("Starter TODO: Implement Member 3 expression parsing", result.stderr)
+        self.assertEqual(result.returncode, 0)
+        self.assertEqual(result.stderr, "")
+        self.assertIn("\nAST\nProgram\n", result.stdout)
         self.assertIn("TOKEN STREAM", result.stdout)
         self.assertNotIn("Traceback", result.stderr)
 
