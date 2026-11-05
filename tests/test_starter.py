@@ -37,11 +37,20 @@ class StarterTests(unittest.TestCase):
         self.assertIn("error:", result.stderr)
         self.assertNotIn("Traceback", result.stderr)
 
-    def test_unimplemented_lexer_is_reported_honestly(self):
+    def test_pending_member3_work_is_reported_honestly(self):
         result = self.run_cli(ROOT / "tests/public/public1_arithmetic_if.kira")
         self.assertEqual(result.returncode, 2)
-        self.assertIn("Starter TODO: Implement the KIRA lexer", result.stderr)
+        self.assertIn("Starter TODO: Implement Member 3 expression parsing", result.stderr)
+        self.assertIn("TOKEN STREAM", result.stdout)
         self.assertNotIn("Traceback", result.stderr)
+
+    def test_lexical_errors_skip_pending_parser_work(self):
+        result = self.run_cli(ROOT / "tests/public/public4_lexical_errors.kira")
+        self.assertEqual(result.returncode, 1)
+        self.assertIn("LexicalError at line 4", result.stdout)
+        self.assertIn("LexicalError at line 5", result.stdout)
+        self.assertNotIn("Starter TODO", result.stderr)
+        self.assertNotIn("\nAST", result.stdout)
 
     def test_six_public_inputs_have_expected_results(self):
         inputs = sorted((ROOT / "tests/public").glob("*.kira"))
