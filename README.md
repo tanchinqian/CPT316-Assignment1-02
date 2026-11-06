@@ -125,4 +125,34 @@ these checks validates the statement parser with that harness. The focused
 expression/AST tests exercise production functions directly. Member 4 should
 validate all six inputs through the standalone CLI and compare token counts,
 AST structure and error locations with the official expected files.
+
+## Member 4 error-handling validation
+
+`tests/test_error_handling.py` exercises the production components without the
+reference parser harness. It checks all six official CLI results, including each
+token-type count (absent types mean zero), totals, exact valid ASTs and diagnostics.
+Additional checks cover multiple lexical issues, resuming scanning, comments,
+LF/CRLF/CR positions, phase skipping, first syntax error, empty/truncated input,
+and the absence of semantic evaluation.
+
+The CLI reports every lexical issue and explicitly says parsing was skipped.
+Syntax failures report only the first `SyntaxIssue`; neither failure prints an
+AST. File/encoding errors use argparse diagnostics on stderr. Exit statuses are
+0 for success, 1 for lexical/syntax errors, and 2 for command-line/file failures
+or an implementation recursion limit.
+
+Parsing and AST formatting share a narrow `RecursionError` handler. Formatting
+finishes before the AST heading is printed, so recursion failure cannot leave a
+partial tree. The diagnostic identifies an implementation limit on stderr; it
+does not mislabel a potentially valid program as a syntax error. This avoids an
+uncaught traceback but does not remove the size/depth limitation of the recursive
+parser and formatter. Do not claim that arbitrarily large inputs are supported.
+
+Validation after this change: 35 unittest tests passed, including all six public
+inputs through the production CLI. Run the command above to reproduce the checks.
+The issue-format checks cover lexical, token-based syntax and EOF diagnostics.
+Invalid-input checks also cover malformed numeric names, lone `!`, leading
+underscores, decimals, missing delimiters, invalid conditions, unary minus,
+empty blocks, block declarations, stray `else` and trailing tokens. `expect()`
+uses the shared `raise_syntax_error()` helper for both mismatches and EOF.
 `tests/public/README.txt` explains permitted output differences.

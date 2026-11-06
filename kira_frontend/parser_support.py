@@ -40,12 +40,6 @@ def expect(
     """
     tok = peek(tokens, pos)
     desc = f"'{expected_lexeme}'" if expected_lexeme else expected_type.value.lower()
-    if tok is None:
-        raise SyntaxIssue(f"expected {desc}", at_end_of_input=True)
-    if tok.type != expected_type or (expected_lexeme is not None and tok.lexeme != expected_lexeme):
-        raise SyntaxIssue(
-            f"expected {desc} before '{tok.lexeme}'",
-            tok.line,
-            tok.column
-        )
+    if tok is None or tok.type != expected_type or (expected_lexeme is not None and tok.lexeme != expected_lexeme):
+        raise_syntax_error(tokens, pos, desc)
     return tok, pos + 1

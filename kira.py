@@ -1,4 +1,4 @@
-"""Command-line starter for the KIRA compiler front end."""
+"""Command-line pipeline and diagnostics for the KIRA compiler front end."""
 import argparse
 from collections import Counter
 from pathlib import Path
@@ -68,20 +68,27 @@ def main() -> int:
         print("=" * 24)
         for issue in lexical_issues:
             print(issue)
+        print(f"{len(lexical_issues)} lexical error(s). Parsing skipped.")
         return 1  # Required: do not run the parser after lexical errors.
     try:
         tree, _next_position = parse_program(tuple(tokens))
+        # Format before printing the heading so a failed traversal emits no
+        # partial AST. Both parsing and display use Python recursion.
+        ast_text = format_ast(tree)
     except SyntaxIssue as issue:
         print(issue)
         return 1
+    except RecursionError:
+        print(
+            "KIRA implementation limit: input exceeds Python's recursion capacity "
+            "during parsing or AST display.",
+            file=sys.stderr,
+        )
+        return 2
     print("\nAST")
-    print(format_ast(tree))
+    print(ast_text)
     return 0
 
 
 if __name__ == "__main__":
-    try:
-        raise SystemExit(main())
-    except NotImplementedError as error:
-        print(f"Starter TODO: {error}", file=sys.stderr)
-        raise SystemExit(2)
+    raise SystemExit(main())
