@@ -69,13 +69,14 @@ def main() -> int:
         for issue in lexical_issues:
             print(issue)
         print(f"{len(lexical_issues)} lexical error(s). Parsing skipped.")
-        return 1  # Required: do not run the parser after lexical errors.
+        return 1
     try:
         tree, _next_position = parse_program(tuple(tokens))
-        # Format before printing the heading so a failed traversal emits no
-        # partial AST. Both parsing and display use Python recursion.
         ast_text = format_ast(tree)
     except SyntaxIssue as issue:
+        print("\n" + "=" * 24)
+        print("SYNTAX ERROR")
+        print("=" * 24)
         print(issue)
         return 1
     except RecursionError:
