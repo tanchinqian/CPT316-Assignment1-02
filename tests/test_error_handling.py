@@ -3,6 +3,7 @@ from contextlib import redirect_stderr, redirect_stdout
 from io import StringIO
 from pathlib import Path
 import re
+import os
 import subprocess
 import sys
 import tempfile
@@ -20,6 +21,27 @@ PUBLIC = ROOT / "tests" / "public"
 
 
 class ErrorHandlingTests(unittest.TestCase):
+    def test_redirected_output_escapes_unsupported_characters(self):
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / "case.kira"
+            for source, status in (("print(1); \u03bb", 1), ("# \u03bb\nprint(1);", 0)):
+                with self.subTest(source=source):
+                    path.write_text(source, encoding="utf-8")
+                    result = subprocess.run(
+                        [sys.executable, str(ROOT / "kira.py"), str(path)],
+                        capture_output=True, text=True, encoding="cp1252",
+                        env=dict(os.environ, PYTHONIOENCODING="cp1252:strict"),
+                        timeout=15,
+                    )
+                    self.assertEqual(result.returncode, status)
+                    self.assertEqual(result.stderr, "")
+                    self.assertIn(r"\u03bb", result.stdout)
+                    self.assertNotIn("Traceback", result.stdout)
+                    if status:
+                        self.assertIn("LexicalError at line 1, col 11:", result.stdout)
+                    else:
+                        self.assertIn("\nAST\n", result.stdout)
+
     def test_issue_message_contracts(self):
         self.assertEqual(str(LexicalIssue(2, 11, "invalid character '$'")),
                          "LexicalError at line 2, col 11: invalid character '$'")

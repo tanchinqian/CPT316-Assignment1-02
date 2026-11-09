@@ -92,4 +92,6 @@ def main() -> int:
 
 
 if __name__ == "__main__":
+    sys.stdout.reconfigure(errors="backslashreplace")
+    sys.stderr.reconfigure(errors="backslashreplace")
     raise SystemExit(main())
