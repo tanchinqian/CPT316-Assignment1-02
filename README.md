@@ -15,6 +15,26 @@ The lexer, statement/block parser, expression/condition parser and text AST
 formatter are implemented. Valid inputs print tokens, counts and the AST (status
 0). Lexical errors skip parsing; syntax errors stop at the first error (status 1).
 
+## Graphical AST export
+
+Add `--svg` followed by an output filename to save a boxes-and-lines diagram:
+
+```powershell
+python kira.py tests/public/public1_arithmetic_if.kira --svg ast.svg
+```
+
+Open `ast.svg` in a browser. SVG stays sharp when zoomed or inserted into a report.
+The diagram uses the same AST as the text display, preserves child order, and
+spaces sibling subtrees apart. Dark blue marks the root, pale blue marks internal
+nodes, and green marks leaves. Export uses only Python's standard library.
+The text output remains identical. Invalid programs do not generate a diagram.
+An existing output file is replaced on a successful export; choose a new filename
+when keeping diagrams from multiple inputs. The source file cannot be the output.
+`kira_frontend/ast_svg.py` contains the pure SVG formatter; only the CLI writes it.
+
+The current suite contains 39 passing tests, including SVG export, XML escaping,
+unchanged text output, invalid-input skipping and source-file protection.
+
 ## Files and interfaces
 
 | File | Purpose | Work remaining |

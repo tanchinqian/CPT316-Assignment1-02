@@ -5,6 +5,7 @@ from pathlib import Path
 import sys
 
 from kira_frontend.ast_nodes import format_ast
+from kira_frontend.ast_svg import format_ast_svg
 from kira_frontend.errors import SyntaxIssue
 from kira_frontend.lexer import Lexer
 from kira_frontend.parser import parse_program
@@ -34,7 +35,10 @@ def print_table(headers: tuple[str, ...], rows: list[tuple[str, ...]]) -> None:
 def main() -> int:
     cli = argparse.ArgumentParser(description="Lex and parse a KIRA source file")
     cli.add_argument("source_file", type=Path, help="path to a .kira file")
+    cli.add_argument("--svg", type=Path, help="save the valid program's graphical AST as SVG")
     args = cli.parse_args()
+    if args.svg and args.svg.resolve() == args.source_file.resolve():
+        cli.error("SVG output must use a different path from the source file")
     try:
         source = args.source_file.read_text(encoding="utf-8")
     except (OSError, UnicodeError) as error:
@@ -73,6 +77,7 @@ def main() -> int:
     try:
         tree, _next_position = parse_program(tuple(tokens))
         ast_text = format_ast(tree)
+        svg_text = format_ast_svg(tree) if args.svg else None
     except SyntaxIssue as issue:
         print("\n" + "=" * 24)
         print("SYNTAX ERROR")
@@ -86,6 +91,11 @@ def main() -> int:
             file=sys.stderr,
         )
         return 2
+    if args.svg:
+        try:
+            args.svg.write_text(svg_text, encoding="utf-8")
+        except OSError as error:
+            cli.error(str(error))
     print("\nAST")
     print(ast_text)
     return 0
