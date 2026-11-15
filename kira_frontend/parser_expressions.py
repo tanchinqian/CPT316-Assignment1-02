@@ -1,8 +1,3 @@
-"""Functional expression/condition parser adapted from Sharrvesh's reference harness.
-
-Each function returns an immutable AST and the next token position. No parser
-cursor or token stream is mutated. The original reference remains in tests.
-"""
 from .ast_nodes import ASTNode
 from .parser_support import ParseResult, expect, peek, raise_syntax_error
 from .tokens import Token, TokenType

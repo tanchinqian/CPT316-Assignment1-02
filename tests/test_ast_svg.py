@@ -1,4 +1,3 @@
-"""SVG structure, escaping and production CLI integration."""
 from pathlib import Path
 import subprocess
 import sys

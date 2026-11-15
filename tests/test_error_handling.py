@@ -1,4 +1,3 @@
-"""Member 4 regression checks using the production compiler components."""
 from contextlib import redirect_stderr, redirect_stdout
 from io import StringIO
 from pathlib import Path

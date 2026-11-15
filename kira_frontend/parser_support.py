@@ -1,4 +1,3 @@
-"""Shared parser helpers adapted from Sharrvesh's Member 2 deliverable."""
 from typing import Callable, NoReturn, Optional, Tuple
 
 from .ast_nodes import ASTNode

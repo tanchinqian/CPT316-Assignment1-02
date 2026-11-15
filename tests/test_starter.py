@@ -1,4 +1,3 @@
-"""Smoke checks for the incomplete scaffold, not compiler correctness tests."""
 from pathlib import Path
 import subprocess
 import sys

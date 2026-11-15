@@ -1,4 +1,3 @@
-"""Member 2 integration checks using Sharrvesh's Member 3 reference harness."""
 from contextlib import redirect_stdout
 from dataclasses import FrozenInstanceError
 from io import StringIO

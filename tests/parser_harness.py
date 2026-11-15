@@ -1,8 +1,3 @@
-"""Sharrvesh's standalone expression/display harness, adapted to shared types.
-
-Source: CPT316- Sharrvesh.docx, section 1.1. This is test support for Member 2,
-not Member 3's production implementation. Do not import it from kira_frontend.
-"""
 from typing import Tuple
 
 from kira_frontend.ast_nodes import ASTNode

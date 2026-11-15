@@ -1,4 +1,3 @@
-"""Precedence, associativity, source errors and text-tree rendering contracts."""
 import unittest
 
 from kira_frontend.ast_nodes import ASTNode, format_ast

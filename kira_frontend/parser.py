@@ -1,9 +1,3 @@
-"""Statement/block parser ported from Sharrvesh's Member 2 deliverable.
-
-Repository integration uses the shared Token, ASTNode and SyntaxIssue types.
-Expression and condition callbacks belong to Member 3; tests inject the
-standalone harness supplied in Sharrvesh's document.
-"""
 from typing import Tuple
 
 from . import parser_expressions

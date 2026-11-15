@@ -1,4 +1,3 @@
-"""Lexer starter. Implement scanning here; keep parsing in parser.py."""
 from .errors import LexicalIssue
 from .tokens import Token, TokenType
 
