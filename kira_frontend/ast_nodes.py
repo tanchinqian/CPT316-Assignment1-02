@@ -10,11 +10,6 @@ class ASTNode:
 
 
 def format_ast(root: ASTNode) -> str:
-    """Render one node per line with two spaces per level and no final newline.
-
-    Adapted from the standalone formatter in Sharrvesh's reference harness.
-    Traversal preserves child order and never changes the input tree.
-    """
     return _format_ast(root, 0)
 
 

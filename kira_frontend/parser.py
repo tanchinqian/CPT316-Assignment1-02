@@ -16,12 +16,6 @@ def parse_program(
     parse_expr: ExprParserFn | None = None,
     parse_cond: ExprParserFn | None = None,
 ) -> ParseResult:
-    """Parse a nonempty program and return its tree and consumed position.
-
-    The CLI uses Member 3's default expression/condition entry points.
-    Explicit callbacks allow independent testing of the statement parser.
-    All tokens from position onward must be consumed; there is no EOF token.
-    """
     if not 0 <= position <= len(tokens):
         raise ValueError("position must be between 0 and len(tokens)")
     if position == len(tokens):
